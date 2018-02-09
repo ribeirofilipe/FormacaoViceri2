@@ -19,6 +19,7 @@ namespace Fatec.RD.Bussiness
             _relatorioDespesaRepositorio = new RelatorioDespesaRepositorio();
         }       
 
+
         public RelatorioViewModel Adicionar(RelatorioInput obj)
         {
             var objRelatorio = new Relatorio()
@@ -131,19 +132,12 @@ namespace Fatec.RD.Bussiness
             {
                 _relatorioDespesaRepositorio.Inserir(item.IdDespesa, idRelatorio);
             }
-
-        }
-        
+        }        
 
         public void DeletarPorIdRelatorioDespesa(ChaveRelatorioDespesa obj, int id)
         {                           
                 _relatorioDespesaRepositorio.Delete(obj.IdDespesa, id);          
         }
-
-
-
-
-
-
-        }
+        
+    }
 }

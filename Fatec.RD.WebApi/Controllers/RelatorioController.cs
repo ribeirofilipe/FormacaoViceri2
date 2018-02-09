@@ -19,6 +19,7 @@ namespace Fatec.RD.WebApi.Controllers
     public class RelatorioController : ApiController
     {
         RelatorioNegocio _appRelatorio;
+        DespesaNegocio _appDespesas;
 
         /// <summary>
         /// 
@@ -26,6 +27,7 @@ namespace Fatec.RD.WebApi.Controllers
         public RelatorioController()
         {
             _appRelatorio = new RelatorioNegocio();
+            _appDespesas = new DespesaNegocio();
         }
 
         /// <summary>
@@ -127,6 +129,7 @@ namespace Fatec.RD.WebApi.Controllers
         {
             return Ok(_appRelatorio.Selecionar());
         }
+                
 
         /// <summary>
         /// Método que obtem, todas as despesas do relatório...
@@ -146,6 +149,7 @@ namespace Fatec.RD.WebApi.Controllers
         {
             return Ok(_appRelatorio.SelecionarDespesasPorRelatorio(id));
         }
+
 
         /// <summary>
         /// Método que obtem, todas as despesas sem relatório...
@@ -186,9 +190,9 @@ namespace Fatec.RD.WebApi.Controllers
         }
 
         /// <summary>
-        /// Método que insere a relacao de relatório e despesa
+        /// Método que exclui a despesa vinculada no relatório
         /// </summary>
-        /// <remarks>Insere vínculo entre as entidade</remarks>
+        /// <remarks>Retira o vinculo entre despesa e relatório</remarks>
         /// <response code="201">Created</response>
         /// <response code="400">BadRequest</response>
         /// <response code="500">InternalServerError</response>
@@ -197,12 +201,30 @@ namespace Fatec.RD.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
         [Route("{id}/Despesas")]
         [HttpDelete]
-        public IHttpActionResult DeleteRelatorioDespesa(ChaveRelatorioDespesa obj, int id)
+        public IHttpActionResult DeleteRelatorioDespesa(int id, ChaveRelatorioDespesa obj)
         {
             _appRelatorio.DeletarPorIdRelatorioDespesa(obj, id);
             return Ok();
         }
 
+        /// <summary>
+        /// Método que obtem, todas as despesas do relatório...
+        /// </summary>
+        /// <param name="id">Id do relatório</param>
+        /// <returns>Lista de Despesas</returns>
+        /// <remarks>Obtem lista de depesa</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="404">NotFound</response>      
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.NotFound, "NotFound")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [Route("{id}/Somatoria")]
+        [HttpGet]
+        public IHttpActionResult SomatoriaRelatorio(int id)
+        {
+            return Ok(_appDespesas.SomatorioDespesas(_appRelatorio.SelecionarDespesasPorRelatorio(id)));
+        }
 
 
     }

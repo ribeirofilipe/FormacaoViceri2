@@ -106,10 +106,10 @@ namespace Fatec.RD.WebApi.Controllers
             _appDespesa.Deletar(id);
             return Ok();
         }
+        
         /// <summary>
         /// Método que lista despesa....
         /// </summary>
-
         /// <returns></returns>
         /// /// <param name="id">Id da despesa</param>
         /// <remarks>Insere uma nova despesa</remarks>
@@ -126,7 +126,7 @@ namespace Fatec.RD.WebApi.Controllers
         {
             return Ok(_appDespesa.SelecionarPorId(id));
         }
-
+        
         /// <summary>
         /// Método que obtem uma lista de despesa....
         /// </summary>
@@ -142,6 +142,28 @@ namespace Fatec.RD.WebApi.Controllers
         public IHttpActionResult Get()
         {
             return Ok(_appDespesa.Selecionar());
+
         }
+   
+        
+        /// <summary>
+        /// Método que obtem uma lista de despesa....
+        /// </summary>
+        /// <returns>Lista de Despesa</returns>
+        /// <remarks>Obtem lista de depesa</remarks>
+        /// <response code="200">Ok</response>
+        /// <response code="400">BadRequest</response>
+        /// <response code="500">InternalServerError</response>
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "BadRequest")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "InternalServerError")]
+        [HttpGet]
+        [Route("Somatoria")]
+        public IHttpActionResult somatoria()
+        {
+            return Ok(_appDespesa.SomatorioDespesas(_appDespesa.Selecionar()));
+        }
+
+    
     }
 }

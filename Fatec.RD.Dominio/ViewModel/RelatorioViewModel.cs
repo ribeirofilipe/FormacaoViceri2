@@ -13,5 +13,6 @@ namespace Fatec.RD.Dominio.ViewModel
         public string Descricao { get; set; }
         public string Comentario { get; set; }
         public DateTime DataCriacao { get; set; }
+                
     }
 }

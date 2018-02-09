@@ -31,6 +31,17 @@ namespace Fatec.RD.Bussiness
         {
             return _despesaRepositorio.Selecionar();
         }
+        
+        public decimal SomatorioDespesas(List<DespesaViewModel> obj)
+        {
+            decimal somatoria = 0;
+
+            foreach (var item in obj)
+            {
+                somatoria += item.Valor;
+            }
+            return somatoria;
+        }
 
         public DespesaViewModel Adicionar(DespesaInput obj)
         {
@@ -95,5 +106,7 @@ namespace Fatec.RD.Bussiness
         {
             return _despesaRepositorio.SelecionarPorId(id);
         }
+
+        
     }
 }
